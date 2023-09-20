@@ -15,13 +15,24 @@ body {
 
 #root {
 	display: grid;
-	grid-template-rows: 12vh min-content;
+	grid-template-rows: min-content min-content;
 	grid-template-columns:
 		[full-start] minmax(6rem, 1fr) repeat(
 			8,
 			[col-start] minmax(min-content, 14rem) [col-end]
 		)
 		minmax(6rem, 1fr) [full-end];
+}
+
+@media screen and (max-width: 500px){
+	#root{
+		grid-template-columns:
+		[full-start] minmax(3rem, 1fr) repeat(
+			8,
+			[col-start] minmax(min-content, 14rem) [col-end]
+		)
+		minmax(3rem, 1fr) [full-end];
+	}
 }
 
 img {
@@ -37,11 +48,13 @@ p {
 .nav {
 	grid-column: 2/10;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: 1px solid rgba(230, 230, 230);
-	gap: 3rem;
-	padding-block: 4rem;
+	column-gap: 4rem;
+	row-gap: 2rem;
+	padding-block: 2rem;
 }
 
 .nav__logo {
@@ -50,7 +63,7 @@ p {
 }
 
 form {
-	width: 350px;
+	width: min(100%, 350px);
 }
 
 .search__input {
@@ -69,11 +82,15 @@ form {
 	grid-column: 2/10;
 	grid-row: 2/3;
 	padding-bottom: 6rem;
+	width: 100%;
+	max-width: 1440px;
+	margin-inline: auto;
+	outline: 1px solid red;
 }
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
 	gap: 3.5rem;
 	justify-items: center;
 }
@@ -90,4 +107,11 @@ form {
 	font-size: 2rem;
 	width: min(100%, 450px);
 	padding: 1.6rem;
+}
+
+
+@media screen and (max-width: 638px) {
+	.nav{
+		justify-content: center;
+	}
 }
