@@ -7,8 +7,6 @@ const Grid = () => {
 	const query = searchParams.get('query');
 	const images = query ? data?.filter((el) => el.gender === query) : data;
 
-	console.log(images);
-
 	return (
 		<>
 			<div className='grid-container'>
