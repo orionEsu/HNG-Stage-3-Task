@@ -1,0 +1,93 @@
+*,
+*::after,
+*::before {
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: 'Cabinet Grotesk', sans-serif;
+}
+
+#root {
+	display: grid;
+	grid-template-rows: 12vh min-content;
+	grid-template-columns:
+		[full-start] minmax(6rem, 1fr) repeat(
+			8,
+			[col-start] minmax(min-content, 14rem) [col-end]
+		)
+		minmax(6rem, 1fr) [full-end];
+}
+
+img {
+	display: block;
+	height: 350px;
+	max-width: 100%;
+}
+
+p {
+	font-family: 'Cabinet Grotesk', sans-serif;
+}
+
+.nav {
+	grid-column: 2/10;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid rgba(230, 230, 230);
+	gap: 3rem;
+	padding-block: 4rem;
+}
+
+.nav__logo {
+	font-size: 4rem;
+	font-weight: bold;
+}
+
+form {
+	width: 350px;
+}
+
+.search__input {
+	padding: 1rem;
+
+	font-family: 'Cabinet Grotesk', sans-serif;
+	font-size: 1.6rem;
+	border: 0;
+	border-bottom: 1px solid #999999;
+	width: min(100%, 350px);
+	padding-left: 1.5rem;
+}
+
+.grid-container {
+	margin-top: 6rem;
+	grid-column: 2/10;
+	grid-row: 2/3;
+	padding-bottom: 6rem;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 3.5rem;
+	justify-items: center;
+}
+
+.tags {
+	font-size: 1.8rem;
+	margin-bottom: 2rem;
+	text-align: right;
+}
+
+.error {
+	background-color: rgb(231, 40, 40);
+	color: white;
+	font-size: 2rem;
+	width: min(100%, 450px);
+	padding: 1.6rem;
+}
