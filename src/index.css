@@ -24,14 +24,14 @@ body {
 		minmax(6rem, 1fr) [full-end];
 }
 
-@media screen and (max-width: 500px){
-	#root{
+@media screen and (max-width: 500px) {
+	#root {
 		grid-template-columns:
-		[full-start] minmax(3rem, 1fr) repeat(
-			8,
-			[col-start] minmax(min-content, 14rem) [col-end]
-		)
-		minmax(3rem, 1fr) [full-end];
+			[full-start] minmax(3rem, 1fr) repeat(
+				8,
+				[col-start] minmax(min-content, 14rem) [col-end]
+			)
+			minmax(3rem, 1fr) [full-end];
 	}
 }
 
@@ -55,6 +55,7 @@ p {
 	column-gap: 4rem;
 	row-gap: 2rem;
 	padding-block: 2rem;
+	padding-inline: 1.5rem;
 }
 
 .nav__logo {
@@ -62,7 +63,7 @@ p {
 	font-weight: bold;
 }
 
-form {
+.form__input {
 	width: min(100%, 350px);
 }
 
@@ -108,9 +109,107 @@ form {
 	padding: 1.6rem;
 }
 
-
 @media screen and (max-width: 638px) {
-	.nav{
+	.nav {
 		justify-content: center;
 	}
+}
+
+form{
+	display: grid;
+}
+
+.login {
+	grid-column: 2/10;
+	height: 100vh;
+	display: grid;
+	align-items: center;
+}
+
+input{
+	display: block;
+}
+.login__form {
+	display: grid;
+	font-family: 'Cabinet Grotesk', sans-serif;
+}
+
+.login__heading {
+	text-align: center;
+	font-size: 3rem;
+	margin-bottom: 2rem;
+}
+.input{
+	width: min(100%, 400px);
+	margin-inline: auto;
+}
+.login__form--mail,
+.login__form--password {
+	padding: 1rem;
+	border: 1px solid rgba(230, 230, 230);
+	font-family: 'Cabinet Grotesk', sans-serif;
+	font-size: 1.8rem;
+	width: min(100%, 400px);
+	margin: auto;
+	border-radius: 0;
+	position: relative;
+}
+
+.login__form--password {
+	margin-top: 2.5rem;
+}
+
+.login__check {
+	text-align: center;
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.login-btn {
+	border: none;
+	background-color: transparent;
+	font-size: 1.8rem;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	transition: color 0.3s ease;
+	padding: 0;
+	border-bottom: 1px solid #000;
+	margin-left: .5rem;
+
+	&:focus,
+	&:hover {
+		color: rgba(0, 0, 0, 1);
+	}
+}
+
+.sign-up {
+	border: 1px solid rgba(230, 230, 230);
+	background-color: #000;
+	font-family: 'Cabinet Grotesk', sans-serif;
+	color: #fff;
+	padding: 1rem;
+	font-size: 2rem;
+	width: min(100%, 200px);
+	margin-inline: auto;
+	margin-top: 3rem;
+	margin-bottom: 3rem;
+	cursor: pointer;
+}
+
+.btn-signout{
+	padding: 0;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;position: absolute;
+	right: 3rem;
+	top: 5rem;
+}
+
+.error-mail, .error-password{
+	position: absolute;
+	margin-top: .25rem;
+	font-weight: bold;
+	font-size: 1.2rem;
+	color: red;
+	opacity: 0;
 }

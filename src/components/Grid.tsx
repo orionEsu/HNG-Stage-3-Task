@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { data } from '../data.ts';
 import { useSearchParams } from 'react-router-dom';
 
