@@ -3,12 +3,12 @@ import { useSearchParams } from 'react-router-dom';
 
 const SearchInput = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
-
+	searchParams;
 	const formRef = useRef<HTMLInputElement>(null);
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const value = formRef.current?.value;
-		if (value) setSearchParams({ query: value.toLowerCase() });
+		const value = formRef.current?.value.toLowerCase()!;
+		setSearchParams({ q: value });
 	};
 
 	return (
@@ -19,7 +19,7 @@ const SearchInput = () => {
 				className='form__input'
 			>
 				<input
-					type='search'
+					type='text'
 					name=''
 					id=''
 					ref={formRef}

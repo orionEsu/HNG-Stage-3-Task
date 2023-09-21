@@ -2,8 +2,8 @@ import { data } from '../data.ts';
 import { useSearchParams } from 'react-router-dom';
 
 const Grid = () => {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get('query');
+	const [searchParams] = useSearchParams();
+	const query = searchParams.get('q');
 	const images = query ? data?.filter((el) => el.gender === query) : data;
 
 	return (
@@ -14,7 +14,9 @@ const Grid = () => {
 					<strong>Children</strong>
 				</p>{' '}
 				{images.length === 0 && (
-					<p className='error'>No Item With This Tag</p>
+					<p className='error'>
+						No Item With Tag: <strong>{query}</strong>
+					</p>
 				)}
 				<div className='grid'>
 					{images?.map((el) => (
