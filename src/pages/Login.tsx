@@ -15,7 +15,8 @@ const Login = () => {
 	const errorPassword = useRef<HTMLParagraphElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [login, setLogin] = useState(false);
-	const [error, setError] = useState('');
+	const [mailError, setMailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 	const navigate = useNavigate();
 
 	const handleSubmit = async (
@@ -35,9 +36,9 @@ const Login = () => {
 				);
 				setLoading(false);
 				if (data?.user.uid) {
-                    targetElement.email.value = '';
-					targetElement.password.value = '';
 					navigate('/home');
+					targetElement.email.value = '';
+					targetElement.password.value = '';
 				}
 			} else {
 				const data = await signInWithEmailAndPassword(
@@ -55,7 +56,7 @@ const Login = () => {
 		} catch (error) {
 			setLoading(false);
 			const firebaseError = error as FirebaseError;
-
+		
 			if (
 				errorMail?.current &&
 				errorPassword?.current &&
@@ -66,22 +67,22 @@ const Login = () => {
 			}
 
 			if (
-				firebaseError?.code.includes('mail') &&
-				errorMail &&
+				firebaseError?.code.includes('email') &&
 				errorMail?.current
 			) {
-				setError(firebaseError?.code);
+				setMailError(firebaseError?.code);
 				errorMail.current.style.opacity = '1';
 			}
 
 			if (
 				firebaseError?.code.includes('password') &&
-				errorPassword &&
 				errorPassword?.current
 			) {
-				setError(firebaseError?.code);
+				setPasswordError(firebaseError?.code);
 				errorPassword.current.style.opacity = '1';
 			}
+
+			alert(firebaseError?.code)
 		}
 	};
 	return (
@@ -109,7 +110,7 @@ const Login = () => {
 							className='error-mail'
 							ref={errorMail}
 						>
-							{error}
+							{mailError}
 						</p>
 					</div>
 					<div className='input'>
@@ -125,7 +126,7 @@ const Login = () => {
 							className='error-password'
 							ref={errorPassword}
 						>
-							{error}
+							{passwordError}
 						</p>
 					</div>
 
@@ -151,7 +152,8 @@ const Login = () => {
 						className='login-btn'
 						onClick={() => {
 							setLogin(!login);
-							setError('');
+							setMailError('');
+							setPasswordError('');
 						}}
 					>
 						{login ? 'Sign Up' : 'Sign In'}

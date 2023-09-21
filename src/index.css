@@ -93,6 +93,11 @@ p {
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
 	gap: 3.5rem;
 	justify-items: center;
+
+	& > *{
+		padding: .1rem;
+		background-color: black;
+	}
 }
 
 .tags {
@@ -115,7 +120,7 @@ p {
 	}
 }
 
-form{
+form {
 	display: grid;
 }
 
@@ -126,7 +131,7 @@ form{
 	align-items: center;
 }
 
-input{
+input {
 	display: block;
 }
 .login__form {
@@ -139,7 +144,7 @@ input{
 	font-size: 3rem;
 	margin-bottom: 2rem;
 }
-.input{
+.input {
 	width: min(100%, 400px);
 	margin-inline: auto;
 }
@@ -174,7 +179,7 @@ input{
 	transition: color 0.3s ease;
 	padding: 0;
 	border-bottom: 1px solid #000;
-	margin-left: .5rem;
+	margin-left: 0.5rem;
 
 	&:focus,
 	&:hover {
@@ -196,20 +201,25 @@ input{
 	cursor: pointer;
 }
 
-.btn-signout{
+.btn-signout {
 	padding: 0;
 	border: none;
 	background-color: transparent;
-	cursor: pointer;position: absolute;
+	cursor: pointer;
+	position: absolute;
 	right: 3rem;
 	top: 5rem;
 }
 
-.error-mail, .error-password{
+.error-mail,
+.error-password {
 	position: absolute;
-	margin-top: .25rem;
+	margin-top: 0.25rem;
 	font-weight: bold;
 	font-size: 1.2rem;
 	color: red;
 	opacity: 1;
+}
+
+.grid-items {
 }
