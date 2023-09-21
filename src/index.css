@@ -96,8 +96,6 @@ p {
 	justify-items: center;
 
 	& > *{
-		padding: .1rem;
-		background-color: black;
 		object-fit: cover;
 	}
 }

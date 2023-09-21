@@ -15,7 +15,7 @@ const SearchInput = () => {
 		<>
 			<form
 				action=''
-				onSubmit={handleSubmit}
+				onChange={handleSubmit}
 				className='form__input'
 			>
 				<input

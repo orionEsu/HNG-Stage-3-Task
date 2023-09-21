@@ -1,14 +1,14 @@
-import { useState, useRef, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../index.css';
-import { database } from '../services/firebaseauth';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FirebaseError } from 'firebase/app';
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FormEvent, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../index.css';
+import { database } from '../services/firebaseauth';
 
 const Login = () => {
 	const errorMail = useRef<HTMLParagraphElement>(null);
@@ -25,64 +25,56 @@ const Login = () => {
 	) => {
 		e.preventDefault();
 		setLoading(true);
+
 		const targetElement = e.target as HTMLFormElement;
+		let email = targetElement?.email.value;
+		let password = targetElement?.password.value;
 
 		try {
 			if (type === 'signup') {
 				const data = await createUserWithEmailAndPassword(
 					database,
-					targetElement?.email.value,
-					targetElement?.password.value
+					email,
+					password
 				);
-				setLoading(false);
-				if (data?.user.uid) {
+				if (data?.user?.uid) {
+					setLoading(false);
+					email = password = '';
 					navigate('/home');
-					targetElement.email.value = '';
-					targetElement.password.value = '';
 				}
 			} else {
 				const data = await signInWithEmailAndPassword(
 					database,
-					targetElement?.email.value,
-					targetElement?.password.value
+					email,
+					password
 				);
 				setLoading(false);
 				if (data?.user.uid) {
 					navigate('/home');
-					targetElement.email.value = '';
-					targetElement.password.value = '';
+					email = password = '';
 				}
 			}
 		} catch (error) {
 			setLoading(false);
 			const firebaseError = error as FirebaseError;
-		
-			if (
-				errorMail?.current &&
-				errorPassword?.current &&
-				errorMail?.current
-			) {
+
+			if (errorPassword?.current && errorMail?.current) {
 				errorMail.current.style.opacity = '0';
 				errorPassword.current.style.opacity = '0';
 			}
 
-			if (
-				firebaseError?.code.includes('email') &&
-				errorMail?.current
-			) {
-				setMailError(firebaseError?.code);
+			if (firebaseError?.code.includes('email') && errorMail?.current) {
+				setMailError(firebaseError?.code.slice(5));
 				errorMail.current.style.opacity = '1';
-			}
-
-			if (
+			} else if (
 				firebaseError?.code.includes('password') &&
 				errorPassword?.current
 			) {
-				setPasswordError(firebaseError?.code);
+				setPasswordError(firebaseError?.code.slice(5));
 				errorPassword.current.style.opacity = '1';
+			} else {
+				alert(firebaseError?.code.slice(5));
 			}
-
-			alert(firebaseError?.code)
 		}
 	};
 	return (
