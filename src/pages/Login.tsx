@@ -14,7 +14,7 @@ const Login = () => {
 	const errorMail = useRef<HTMLParagraphElement>(null);
 	const errorPassword = useRef<HTMLParagraphElement>(null);
 	const [loading, setLoading] = useState(false);
-	const [login, setLogin] = useState(false);
+	const [login, setLogin] = useState(true);
 	const [mailError, setMailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 	const navigate = useNavigate();
@@ -27,8 +27,8 @@ const Login = () => {
 		setLoading(true);
 
 		const targetElement = e.target as HTMLFormElement;
-		let email = targetElement?.email.value;
-		let password = targetElement?.password.value;
+		const email = targetElement?.email.value;
+		const password = targetElement?.password.value;
 
 		try {
 			if (type === 'signup') {
@@ -39,8 +39,8 @@ const Login = () => {
 				);
 				if (data?.user?.uid) {
 					setLoading(false);
-					email = password = '';
 					navigate('/home');
+					targetElement.reset();
 				}
 			} else {
 				const data = await signInWithEmailAndPassword(
@@ -51,7 +51,7 @@ const Login = () => {
 				setLoading(false);
 				if (data?.user.uid) {
 					navigate('/home');
-					email = password = '';
+					targetElement.reset();
 				}
 			}
 		} catch (error) {
