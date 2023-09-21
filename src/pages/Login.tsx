@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
 import { database } from '../services/firebaseauth';
@@ -6,60 +6,82 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
-	const errorMail = useRef('');
-	const errorPassword = useRef('');
+	const errorMail = useRef<HTMLParagraphElement>(null);
+	const errorPassword = useRef<HTMLParagraphElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [login, setLogin] = useState(false);
+	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
-	const handleSubmit = async (e, type: string) => {
+	const handleSubmit = async (
+		e: FormEvent<HTMLFormElement>,
+		type: string
+	) => {
 		e.preventDefault();
 		setLoading(true);
-		const email = e.target.email.value;
-		const password = e.target.password.value;
+		const targetElement = e.target as HTMLFormElement;
 
 		try {
 			if (type === 'signup') {
 				const data = await createUserWithEmailAndPassword(
 					database,
-					email,
-					password
+					targetElement?.email.value,
+					targetElement?.password.value
 				);
 				setLoading(false);
 				if (data?.user.uid) {
+                    targetElement.email.value = '';
+					targetElement.password.value = '';
 					navigate('/home');
 				}
 			} else {
 				const data = await signInWithEmailAndPassword(
 					database,
-					email,
-					password
+					targetElement?.email.value,
+					targetElement?.password.value
 				);
 				setLoading(false);
 				if (data?.user.uid) {
 					navigate('/home');
+					targetElement.email.value = '';
+					targetElement.password.value = '';
 				}
 			}
 		} catch (error) {
 			setLoading(false);
+			const firebaseError = error as FirebaseError;
 
-			errorMail.current.style.opacity = 0;
-			errorPassword.current.style.opacity = 0;
-			if (error?.code.includes('mail')) {
-				errorMail.current.textContent = error?.code;
-				errorMail.current.style.opacity = 1;
+			if (
+				errorMail?.current &&
+				errorPassword?.current &&
+				errorMail?.current
+			) {
+				errorMail.current.style.opacity = '0';
+				errorPassword.current.style.opacity = '0';
 			}
 
-			if (error?.code.includes('password')) {
-				errorPassword.current.textContent = error?.code;
-				errorPassword.current.style.opacity = 1;
+			if (
+				firebaseError?.code.includes('mail') &&
+				errorMail &&
+				errorMail?.current
+			) {
+				setError(firebaseError?.code);
+				errorMail.current.style.opacity = '1';
 			}
 
-			console.error(error);
+			if (
+				firebaseError?.code.includes('password') &&
+				errorPassword &&
+				errorPassword?.current
+			) {
+				setError(firebaseError?.code);
+				errorPassword.current.style.opacity = '1';
+			}
 		}
 	};
 	return (
@@ -86,7 +108,9 @@ const Login = () => {
 						<p
 							className='error-mail'
 							ref={errorMail}
-						></p>
+						>
+							{error}
+						</p>
 					</div>
 					<div className='input'>
 						<input
@@ -100,7 +124,9 @@ const Login = () => {
 						<p
 							className='error-password'
 							ref={errorPassword}
-						></p>
+						>
+							{error}
+						</p>
 					</div>
 
 					<button className='sign-up'>
@@ -123,7 +149,10 @@ const Login = () => {
 						: 'Already have an account?'}{' '}
 					<button
 						className='login-btn'
-						onClick={() => setLogin(!login)}
+						onClick={() => {
+							setLogin(!login);
+							setError('');
+						}}
 					>
 						{login ? 'Sign Up' : 'Sign In'}
 					</button>

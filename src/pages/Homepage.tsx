@@ -10,18 +10,19 @@ const Homepage = () => {
 	const navigate = useNavigate();
 	
 
-	const handleSignout = async (e) => {
+	const handleSignout = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		try {
-			const data = await signOut(database);
+			await signOut(database);
 			navigate('/');
 		} catch (error) {
-			console.log(error?.code);
+			alert(error);
 		}
 	};
 	return (
 		<>
 			<button
+				title='Signout Button'
 				className='btn-signout'
 				onClick={handleSignout}
 			>

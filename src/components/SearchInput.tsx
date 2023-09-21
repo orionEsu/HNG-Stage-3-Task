@@ -1,21 +1,21 @@
-import { useRef } from 'react';
+import { FormEvent, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const SearchInput = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const formRef = useRef('');
-	const handleSubmit = (e) => {
+	const formRef = useRef<HTMLInputElement>(null);
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const value = formRef.current?.value;
-		setSearchParams({ query: value.toLowerCase() });
+		if (value) setSearchParams({ query: value.toLowerCase() });
 	};
 
 	return (
 		<>
 			<form
 				action=''
-				onChange={handleSubmit}
+				onSubmit={handleSubmit}
 				className='form__input'
 			>
 				<input
