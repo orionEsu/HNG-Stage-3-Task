@@ -50,7 +50,7 @@ const Login = () => {
 				);
 				setLoading(false);
 				if (data?.user.uid) {
-					navigate('/home');
+					// navigate('/home');
 					targetElement.reset();
 				}
 			}

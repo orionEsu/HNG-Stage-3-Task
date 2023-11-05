@@ -15,7 +15,9 @@ body {
 
 #root {
 	display: grid;
-	grid-template-rows: min-content min-content;
+	/* grid-template-rows: min-content min-content; */
+	/* grid-template-rows: 100vh; */
+	/* grid-template-rows: 15vh 70vh 15vh; */
 	grid-template-columns:
 		[full-start] minmax(6rem, 1fr) repeat(
 			8,
@@ -37,7 +39,7 @@ body {
 
 img {
 	display: block;
-	height: 350px;
+	/* height: 350px; */
 	max-width: 100%;
 }
 
@@ -95,7 +97,7 @@ p {
 	row-gap: 2rem;
 	justify-items: center;
 
-	& > *{
+	& > * {
 		object-fit: cover;
 	}
 }
@@ -129,6 +131,7 @@ form {
 	height: 100vh;
 	display: grid;
 	align-items: center;
+	grid-template-rows: 100vh;
 }
 
 input {
@@ -219,4 +222,62 @@ input {
 	font-size: 1.2rem;
 	color: red;
 	opacity: 1;
+}
+
+.h{
+	grid-column: 1/-1;
+
+}
+
+.home {
+	grid-column: 1/-1;
+	color: #fff;
+}
+
+.home__header, .home__footer {
+	background-color: darkblue;
+	padding: 4rem;
+	padding-inline: clamp(3rem, 1.3333rem + 0.4630vw, 8rem);
+}
+
+.home__header--links{
+	margin-top: 1rem;
+	margin-left: auto;
+	display: flex;
+	gap: 2rem;
+	justify-content: right;
+}
+
+.home__header--links > *{
+	color: blue;
+	font-size: 1.6rem;
+}
+
+.home__body .container{
+	margin: auto;
+	display: grid;
+	justify-content: center;
+	justify-items: center;
+	margin-bottom: 4rem;
+}
+.home__body .container p {
+	font-size: 1.6rem;
+	color: #000;
+	margin-top: 1.5rem;
+	width: min(70ch, 100%);
+	margin-inline: auto;
+}
+
+.container {
+	padding-inline: clamp(3rem, 2.0000rem + 0.2778vw, 6rem);
+}
+
+
+.home__footer .container{
+	display: grid;
+	justify-content: center;
+	justify-items: center;
+}
+.home__footer .container p {
+	margin-top: 1rem;
 }
